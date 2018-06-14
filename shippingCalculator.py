@@ -6,9 +6,17 @@ def priceline(weight):
 ## Each child will store pricing and calculate prices based on weight for each shipping method: Normal/Premium, & Drone. Each child will return: Shipping_Method, Cost 
 
 ##The parent will run both child functions and then use logic to pick the cheapest option. 
-  
-  return true
 
+  drone_price = price_by_drone(weight)
+  ground_price = price_by_ground(weight) 
+  
+  if drone_price > ground_price:
+    return ground_price
+  else:
+    return drone_price
+	
+
+## First child. Calculates cheapest ground/premium rate.
 def price_by_ground(weight):
   if weight >=10:
     cost = 4.75*weight + 20
@@ -21,12 +29,32 @@ def price_by_ground(weight):
     
   premium = 125  
  
-  if premium >= cost:
+  if premium > cost:
     shipping_method = "Ground"
     return cost, shipping_method
   else:
     shipping_method = "Premium"
     return premium, shipping_method
   
+## Test Print Statment
+##print(price_by_ground(23))
 
-print(price_by_ground(23))
+
+## Second Child. Calculates best drone price.
+
+def price_by_drone(weight):
+  shipping_method = "Drone"
+  if weight > 10:
+    cost = 14.25*weight
+  elif weight > 6:
+    cost = 12*weight
+  elif weight > 2:
+    cost = 9*weight
+  else:
+    cost = 4.5*weight
+    
+  return cost, shipping_method
+
+## Test Print Statment
+
+print(priceline(10))
