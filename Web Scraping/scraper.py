@@ -10,6 +10,11 @@ html_code = r.text
 
 soup = BeautifulSoup(html_code, 'html.parser')
 
+all_unique_links = set()
+
+for item in soup.find_all('a'):
+    all_unique_links.add(item.get('href'))
+
 links_set = set()
 
 for item in soup.find_all('a', href=re.compile(r'^(http|/.)')):
